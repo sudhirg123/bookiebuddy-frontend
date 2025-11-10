@@ -1,0 +1,44 @@
+.search-panel {
+  display: grid;
+  gap: clamp(1.25rem, 2.5vw, 1.75rem);
+}
+
+.search-grid {
+  display: grid;
+  gap: clamp(1rem, 2vw, 1.5rem);
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.search-grid__item {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.search-grid__item--wide {
+  grid-column: span 2;
+}
+
+@media (max-width: 640px) {
+  .search-grid__item--wide {
+    grid-column: span 1;
+  }
+}
+
+.search-label {
+  font-weight: 600;
+  color: var(--primary-color-strong);
+}
+
+.search-panel .p-input-icon-left {
+  width: 100%;
+}
+
+.search-panel .p-inputtext {
+  width: 100%;
+  border-radius: var(--radius-sm);
+}
+
+.search-panel .p-selectbutton .p-button {
+  min-width: 140px;
+  border-radius: var(--radius-sm);
+}

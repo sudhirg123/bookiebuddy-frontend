@@ -1,0 +1,10 @@
+<p-card class="stats-card">
+  <div class="icon-wrapper">
+    <i [class]="icon"></i>
+  </div>
+  <div class="stats-card__content">
+    <span class="stats-title">{{ title }}</span>
+    <strong class="stats-value">{{ value }}</strong>
+    <small class="stats-helper" *ngIf="helperText">{{ helperText }}</small>
+  </div>
+</p-card>

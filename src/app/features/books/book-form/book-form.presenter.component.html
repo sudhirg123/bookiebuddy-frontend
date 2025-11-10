@@ -1,0 +1,155 @@
+<form class="book-form app-section" [formGroup]="form" (ngSubmit)="submitForm.emit()">
+  <div class="form-hero surface-alt">
+    <div class="form-hero__intro">
+      <span class="pill">
+        <i class="pi" [ngClass]="{ 'pi-plus-circle': mode === 'create', 'pi-pencil': mode === 'edit' }"></i>
+        {{ mode === 'create' ? 'New Book Review' : 'Edit Book Review' }}
+      </span>
+      <h2>{{ mode === 'create' ? 'Capture a fresh reading memory' : 'Refresh this reading memory' }}</h2>
+      <p>Create a colourful snapshot of what you loved, learned, or imagined while reading.</p>
+    </div>
+
+    <div class="form-hero__note">
+      <i class="pi pi-search"></i>
+      <span>
+        Use the search box below to fetch Google Books suggestions. Pick a match to fill everything in, then tweak what you like.
+      </span>
+    </div>
+
+    <div class="search-bar">
+      <label class="search-bar__label" for="title">Book title</label>
+      <div class="search-bar__combo">
+        <p-autocomplete
+          inputId="title"
+          formControlName="title"
+          [suggestions]="googleResults"
+          [dropdown]="true"
+          [virtualScroll]="true"
+          [virtualScrollItemSize]="38"
+          field="volumeInfo.title"
+          placeholder="Start typing a book title…"
+          [minLength]="2"
+          appendTo="body"
+          (completeMethod)="completeSearch($event)"
+          (onSelect)="onSelectGoogleBook($event)"
+        >
+          <ng-template let-book pTemplate="item">
+            <div class="autocomplete-item">
+              <span class="title">{{ book.volumeInfo.title }}</span>
+              <small>{{ book.volumeInfo.authors?.join(', ') || 'Unknown author' }}</small>
+            </div>
+          </ng-template>
+        </p-autocomplete>
+        <div class="search-bar__spinner" *ngIf="searching">
+          <p-progressSpinner strokeWidth="4" animationDuration=".6s"></p-progressSpinner>
+        </div>
+      </div>
+      <small *ngIf="form.get('title')?.invalid && form.get('title')?.touched" class="error">
+        Title is required.
+      </small>
+    </div>
+
+    <div class="form-hero__actions page-actions">
+      <button
+        pButton
+        type="button"
+        label="Cancel"
+        class="p-button-text"
+        (click)="cancel.emit()"
+      ></button>
+      <button
+        pButton
+        type="submit"
+        label="{{ mode === 'create' ? 'Save to library' : 'Save changes' }}"
+        icon="pi pi-check"
+        [loading]="saving"
+        [disabled]="form.invalid"
+      ></button>
+    </div>
+  </div>
+
+  <div class="form-grid">
+    <div class="form-card">
+      <div class="form-card__heading">
+        <h3>Book basics</h3>
+        <span class="muted">Fine tune any details or add your own flavour.</span>
+      </div>
+
+      <div class="form-card__summary" *ngIf="selectedDescription">
+        <h4>Google Books summary</h4>
+        <div class="summary-text" [innerHTML]="selectedDescription | safeHtml"></div>
+      </div>
+
+      <div class="cover-preview" *ngIf="form.get('coverImageUrl')?.value as cover">
+        <img [src]="cover" alt="Selected book cover" />
+        <span class="muted">Cover pulled from Google Books – feel free to swap it out.</span>
+      </div>
+
+      <div class="form-group">
+        <label for="author">Author</label>
+        <input id="author" type="text" pInputText formControlName="author" placeholder="e.g. Grace Lin" />
+        <small *ngIf="form.get('author')?.invalid && form.get('author')?.touched" class="error">
+          Author is required.
+        </small>
+      </div>
+
+      <div class="form-group">
+        <label for="cover">Cover image URL</label>
+        <input id="cover" type="url" pInputText formControlName="coverImageUrl" placeholder="https://..." />
+        <small *ngIf="form.get('coverImageUrl')?.invalid && form.get('coverImageUrl')?.touched" class="error">
+          Please provide a valid URL.
+        </small>
+      </div>
+
+      <div class="form-group triple">
+        <div>
+          <label for="rating">My rating</label>
+          <p-rating inputId="rating" formControlName="rating" [stars]="5"></p-rating>
+          <small *ngIf="form.get('rating')?.invalid && form.get('rating')?.touched" class="error">
+            Rating is required.
+          </small>
+        </div>
+        <div>
+          <label for="dateFinished">Date finished</label>
+          <p-datepicker
+            inputId="dateFinished"
+            formControlName="dateFinished"
+            [showIcon]="true"
+            iconDisplay="input"
+          ></p-datepicker>
+        </div>
+        <div>
+          <label for="genre">Genre</label>
+          <p-select
+            inputId="genre"
+            formControlName="genre"
+            [options]="getGenreOptions()"
+            placeholder="Select genre"
+            [editable]="true"
+          ></p-select>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-card form-card--reflection">
+      <div class="form-card__heading">
+        <h3>Your reflection</h3>
+        <span class="muted">What made this story memorable? Highlight favourite moments or life lessons.</span>
+      </div>
+
+      <div class="form-group">
+        <label for="review">My review</label>
+        <textarea
+          id="review"
+          class="review-input"
+          formControlName="reviewHtml"
+          rows="10"
+          placeholder="Capture the stand-out moments, themes, or lessons from your read…"
+        ></textarea>
+        <small *ngIf="form.get('reviewHtml')?.invalid && form.get('reviewHtml')?.touched" class="error">
+          Review is required.
+        </small>
+      </div>
+    </div>
+  </div>
+</form>

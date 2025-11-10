@@ -1,0 +1,92 @@
+.library-page {
+  display: grid;
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.hero-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.15), rgba(236, 72, 153, 0.1));
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.hero-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-card__metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: clamp(0.75rem, 2vw, 1.5rem);
+  margin-top: clamp(1.25rem, 2.5vw, 2rem);
+}
+
+.metric-chip {
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: var(--radius-md);
+  padding: clamp(0.75rem, 2vw, 1.25rem);
+  display: grid;
+  gap: 0.35rem;
+  box-shadow: inset 0 0 0 1px rgba(124, 58, 237, 0.12);
+}
+
+.metric-chip__value {
+  font-size: clamp(1.6rem, 3.5vw, 2rem);
+  font-weight: 700;
+  color: var(--primary-color-strong);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.metric-chip__label {
+  color: var(--muted-text-color);
+  font-size: 0.9rem;
+}
+
+.library-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: clamp(1rem, 2vw, 1.5rem);
+}
+
+.library-meta__left {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.library-meta .muted {
+  font-size: 0.85rem;
+}
+
+.book-list__dataview ::ng-deep .p-dataview-content {
+  padding: 0;
+}
+
+.book-list__dataview ::ng-deep .p-dataview-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: clamp(1rem, 2.5vw, 1.75rem);
+}
+
+@media (max-width: 768px) {
+  .page-actions {
+    width: 100%;
+  }
+
+  .page-actions > * {
+    flex: 1;
+  }
+}

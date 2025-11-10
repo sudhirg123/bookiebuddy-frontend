@@ -38,8 +38,8 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kB",
-                  "maximumError": "1MB"
+                  "maximumWarning": "800kB",
+                  "maximumError": "1500kB"
                 },
                 {
                   "type": "anyComponentStyle",
@@ -47,7 +47,13 @@
                   "maximumError": "8kB"
                 }
               ],
-              "outputHashing": "all"
+              "outputHashing": "all",
+              "fileReplacements": [
+                {
+                  "replace": "src/app/environments/environment.ts",
+                  "with": "src/app/environments/environment.prod.ts"
+                }
+              ]
             },
             "development": {
               "optimization": false,
@@ -59,6 +65,12 @@
         },
         "serve": {
           "builder": "@angular/build:dev-server",
+          "options": {
+            "headers": {
+              "Cross-Origin-Opener-Policy": "unsafe-none",
+              "Cross-Origin-Embedder-Policy": "unsafe-none"
+            }
+          },
           "configurations": {
             "production": {
               "buildTarget": "bookiebuddy-frontend:build:production"
@@ -94,5 +106,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "a2bf85ad-f0b3-4ea5-87f6-01f4874ed0be"
   }
 }

@@ -1,0 +1,11 @@
+{
+  "/google-books": {
+    "target": "https://www.googleapis.com/books/v1",
+    "secure": true,
+    "changeOrigin": true,
+    "logLevel": "error",
+    "pathRewrite": {
+      "^/google-books": ""
+    }
+  }
+}

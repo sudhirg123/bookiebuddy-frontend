@@ -1,0 +1,12 @@
+.app-footer {
+  margin: clamp(1.5rem, 3vw, 2.5rem) auto clamp(1rem, 3vw, 2rem);
+  width: min(100% - clamp(1.5rem, 4vw, 3rem), var(--content-max-width));
+  padding: clamp(0.85rem, 2vw, 1.25rem);
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--muted-text-color);
+  border-radius: var(--radius-lg);
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: var(--shadow-soft);
+  border: 1px solid rgba(255, 255, 255, 0.65);
+}

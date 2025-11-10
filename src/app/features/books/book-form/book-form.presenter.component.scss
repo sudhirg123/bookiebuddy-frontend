@@ -1,0 +1,384 @@
+.book-form {
+  display: grid;
+  gap: clamp(1.75rem, 3vw, 2.5rem);
+}
+
+
+.form-hero {
+  padding: clamp(1.5rem, 3vw, 2rem);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+  display: grid;
+  gap: clamp(1.4rem, 3vw, 2rem);
+}
+
+.form-hero__intro {
+  max-width: 380px;
+  display: grid;
+  gap: 0.6rem;
+}
+
+.form-hero__note {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-md);
+  background: rgba(124, 58, 237, 0.08);
+  color: rgba(34, 27, 58, 0.85);
+  font-size: 0.95rem;
+}
+
+.form-hero__note i {
+  color: var(--primary-color-strong);
+  font-size: 1.05rem;
+  margin-top: 0.2rem;
+}
+
+
+.form-hero__actions {
+  display: inline-flex;
+  gap: 0.75rem;
+  justify-content: flex-end;
+}
+
+.form-hero__actions .p-button {
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+}
+
+.search-bar {
+  display: grid;
+  gap: 0.6rem;
+}
+
+.search-bar__label {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: rgba(34, 27, 58, 0.9);
+}
+
+.search-bar__combo {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+:host ::ng-deep .search-bar__combo .p-autocomplete {
+  flex: 1 1 auto;
+}
+
+:host ::ng-deep .search-bar__combo .p-autocomplete .p-inputtext {
+  width: 100%;
+  border-radius: 999px;
+  padding: 0.9rem 1rem;
+  padding-right: 3rem;
+  border: 1px solid rgba(33, 27, 58, 0.15);
+  background: #ffffff;
+  font-size: 1rem;
+  color: rgba(33, 27, 58, 0.95);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+:host ::ng-deep .search-bar__combo .p-autocomplete .p-inputtext::placeholder {
+  color: rgba(33, 27, 58, 0.45);
+}
+
+:host ::ng-deep .search-bar__combo .p-autocomplete .p-inputtext:focus {
+  border-color: rgba(124, 58, 237, 0.65);
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.16);
+}
+
+:host ::ng-deep .search-bar__combo .p-autocomplete .p-autocomplete-dropdown {
+  border-radius: 999px;
+}
+
+:host ::ng-deep .search-bar__combo .p-autocomplete-panel {
+  border-radius: var(--radius-md);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  background: #ffffff !important;
+  border: 1px solid rgba(33, 27, 58, 0.12);
+  margin-top: 0.5rem;
+  z-index: 9999 !important;
+  position: relative;
+}
+
+:host ::ng-deep .search-bar__combo .p-autocomplete-panel .p-autocomplete-items {
+  padding: 0.5rem 0;
+  background: #ffffff !important;
+}
+
+:host ::ng-deep .search-bar__combo .p-autocomplete-panel .p-autocomplete-item {
+  padding: 0.75rem 1rem;
+  margin: 0 0.5rem;
+  border-radius: var(--radius-sm);
+  background: #ffffff !important;
+  color: rgba(33, 27, 58, 0.95) !important;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+:host ::ng-deep .search-bar__combo .p-autocomplete-panel .p-autocomplete-item:hover {
+  background: rgba(124, 58, 237, 0.08) !important;
+  color: rgba(33, 27, 58, 1) !important;
+}
+
+:host ::ng-deep .search-bar__combo .p-autocomplete-panel .p-autocomplete-item.p-highlight {
+  background: rgba(124, 58, 237, 0.12) !important;
+  color: var(--primary-color-strong) !important;
+}
+
+.search-bar__spinner {
+  position: absolute;
+  top: 50%;
+  right: 0.9rem;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.4rem;
+  height: 1.4rem;
+}
+
+.search-bar__hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.86rem;
+  color: rgba(33, 27, 58, 0.72);
+}
+
+.search-bar__hint i {
+  color: var(--primary-color);
+  font-size: 0.95rem;
+}
+
+.form-grid {
+  display: grid;
+  gap: clamp(1.5rem, 3vw, 2rem);
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+}
+
+.form-card {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: var(--radius-lg);
+  padding: clamp(1.25rem, 3vw, 1.75rem);
+  box-shadow: var(--shadow-soft);
+  display: grid;
+  gap: clamp(1rem, 2vw, 1.5rem);
+}
+
+.form-card--reflection {
+  gap: clamp(1.1rem, 2.2vw, 1.6rem);
+}
+
+.form-card__heading {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.form-card__heading h3 {
+  margin: 0;
+  font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+  color: var(--primary-color-strong);
+}
+
+.form-group {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.form-field-group {
+  display: grid;
+  gap: clamp(1rem, 2vw, 1.5rem);
+}
+
+.form-card__summary {
+  background: rgba(124, 58, 237, 0.07);
+  border-radius: var(--radius-md);
+  padding: 0.85rem 1rem;
+  display: grid;
+  gap: 0.35rem;
+  color: rgba(34, 27, 58, 0.9);
+}
+
+.summary-text {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: rgba(34, 27, 58, 0.88);
+  white-space: pre-line;
+}
+
+.form-card__summary h4 {
+  margin: 0;
+  font-size: 1rem;
+  color: var(--primary-color-strong);
+}
+
+.cover-preview {
+  display: grid;
+  gap: 0.45rem;
+  justify-items: start;
+}
+
+.cover-preview img {
+  max-width: 180px;
+  border-radius: var(--radius-md);
+  box-shadow: 0 18px 40px rgba(124, 58, 237, 0.18);
+}
+
+.form-group label {
+  font-weight: 600;
+  color: var(--primary-color-strong);
+}
+
+.form-group input,
+.p-autocomplete,
+.p-inputtext,
+.p-dropdown,
+.p-radiobutton {
+  width: 100%;
+}
+
+.form-group.triple {
+  display: grid;
+  gap: clamp(1rem, 2vw, 1.5rem);
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+}
+
+:host ::ng-deep .form-group .p-dropdown,
+:host ::ng-deep .form-group .p-select,
+:host ::ng-deep .form-group .p-datepicker {
+  width: 100%;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(33, 27, 58, 0.16);
+  background: #ffffff;
+  box-shadow: 0 6px 18px rgba(124, 58, 237, 0.08);
+  transition: border-color var(--transition-base), box-shadow var(--transition-base);
+}
+
+:host ::ng-deep .form-group .p-dropdown .p-dropdown-trigger,
+:host ::ng-deep .form-group .p-select .p-select-trigger {
+  color: var(--primary-color-strong);
+}
+
+:host ::ng-deep .form-group .p-dropdown.p-focus,
+:host ::ng-deep .form-group .p-select.p-focus,
+:host ::ng-deep .form-group .p-datepicker.p-focus,
+:host ::ng-deep .form-group .p-datepicker:focus-within {
+  border-color: rgba(124, 58, 237, 0.65);
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.18);
+}
+
+:host ::ng-deep .form-group .p-dropdown:not(.p-disabled):hover,
+:host ::ng-deep .form-group .p-select:not(.p-disabled):hover,
+:host ::ng-deep .form-group .p-datepicker:not(.p-disabled):hover {
+  border-color: rgba(124, 58, 237, 0.45);
+}
+
+:host ::ng-deep .form-group .p-dropdown-panel,
+:host ::ng-deep .form-group .p-select-panel {
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(124, 58, 237, 0.16);
+  box-shadow: 0 16px 40px rgba(124, 58, 237, 0.18);
+}
+
+:host ::ng-deep .form-group .p-dropdown-panel .p-dropdown-item,
+:host ::ng-deep .form-group .p-select-panel .p-select-option {
+  padding: 0.7rem 0.9rem;
+}
+
+:host ::ng-deep .form-group .p-dropdown-panel .p-dropdown-item.p-highlight,
+:host ::ng-deep .form-group .p-select-panel .p-select-option.p-highlight {
+  background: rgba(124, 58, 237, 0.12);
+  color: var(--primary-color-strong);
+}
+
+:host ::ng-deep .form-group .p-datepicker {
+  display: flex;
+  align-items: center;
+  padding: 0 0.75rem;
+}
+
+:host ::ng-deep .form-group .p-datepicker .p-inputtext {
+  border: none !important;
+  padding: 0.85rem 0;
+  box-shadow: none !important;
+  font-size: 1rem;
+  color: rgba(33, 27, 58, 0.9);
+}
+
+:host ::ng-deep .form-group .p-datepicker .p-datepicker-trigger {
+  color: var(--primary-color-strong);
+}
+
+:host ::ng-deep .form-group .p-datepicker-panel,
+:host ::ng-deep .form-group .p-datepicker-calendar-container {
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(124, 58, 237, 0.2);
+  box-shadow: 0 20px 50px rgba(124, 58, 237, 0.18);
+}
+
+:host ::ng-deep .form-group .p-datepicker .p-datepicker-calendar td > span.p-highlight {
+  background: var(--primary-color);
+  color: #ffffff;
+}
+
+.autocomplete-item {
+  display: grid;
+  gap: 0.25rem;
+  padding: 0.25rem 0;
+}
+
+.autocomplete-item .title {
+  font-weight: 600;
+  color: rgba(33, 27, 58, 0.95);
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.autocomplete-item small {
+  color: rgba(33, 27, 58, 0.7);
+  font-size: 0.85rem;
+  line-height: 1.3;
+}
+
+.error {
+  color: #f87171;
+  font-size: 0.78rem;
+}
+
+.review-input {
+  min-height: 220px;
+  padding: clamp(0.85rem, 2vw, 1.1rem);
+  border: 1px solid rgba(33, 27, 58, 0.16);
+  border-radius: var(--radius-md);
+  background: #ffffff;
+  font: inherit;
+  color: rgba(33, 27, 58, 0.92);
+  resize: vertical;
+  transition: border-color var(--transition-base), box-shadow var(--transition-base);
+}
+
+.review-input::placeholder {
+  color: rgba(33, 27, 58, 0.45);
+}
+
+.review-input:focus {
+  outline: none;
+  border-color: rgba(124, 58, 237, 0.55);
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.18);
+}
+
+@media (max-width: 768px) {
+  .form-hero {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .form-hero__actions {
+    width: 100%;
+    justify-content: stretch;
+  }
+}

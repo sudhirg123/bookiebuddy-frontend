@@ -1,0 +1,37 @@
+.dashboard-page {
+  display: grid;
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.dashboard-hero {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: clamp(1rem, 2.5vw, 1.75rem);
+}
+
+.charts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: clamp(1rem, 2.5vw, 1.75rem);
+}
+
+.dashboard-card {
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+}
+
+.dashboard-card__header {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.dashboard-card__header h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  color: var(--primary-color-strong);
+}

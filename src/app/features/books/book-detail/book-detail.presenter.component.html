@@ -1,0 +1,66 @@
+<section class="book-detail app-section">
+  <div class="book-detail__hero">
+    <div class="book-detail__media">
+      <img
+        [src]="book.coverImageUrl"
+        [alt]="book.title"
+        class="book-detail__cover"
+      />
+      <div class="book-detail__meta-card">
+        <app-rating-display-presenter [value]="book.rating"></app-rating-display-presenter>
+        <span class="chip">
+          <i class="pi pi-tag"></i>
+          {{ book.genre }}
+        </span>
+        <span class="chip" *ngIf="book.dateFinished; else addedDate">
+          <i class="pi pi-calendar"></i>
+          Finished {{ book.dateFinished | date: 'MMM d, y' }}
+        </span>
+        <ng-template #addedDate>
+          <span class="chip">
+            <i class="pi pi-clock"></i>
+            Added {{ book.createdAt | date: 'MMM d, y' }}
+          </span>
+        </ng-template>
+      </div>
+    </div>
+
+    <div class="book-detail__heading">
+      <div class="section-heading__title">
+        <h1>{{ book.title }}</h1>
+        <p>Written by <strong>{{ book.author }}</strong></p>
+      </div>
+
+      <div class="page-actions">
+        <button
+          pButton
+          type="button"
+          label="Edit"
+          icon="pi pi-pencil"
+          class="p-button-rounded"
+          (click)="onEdit()"
+        ></button>
+        <button
+          pButton
+          type="button"
+          label="Delete"
+          icon="pi pi-trash"
+          class="p-button-rounded p-button-danger p-button-outlined"
+          (click)="onDelete()"
+        ></button>
+      </div>
+    </div>
+  </div>
+
+  <div class="book-detail__content">
+    <section class="book-detail__section">
+      <h3>My Review</h3>
+      <div class="book-detail__review" [innerHTML]="book.reviewHtml | safeHtml"></div>
+    </section>
+
+    <section *ngIf="googleDescription" class="book-detail__section">
+      <h3>What Google Books Says</h3>
+      <p class="book-detail__description">{{ googleDescription }}</p>
+    </section>
+  </div>
+</section>

@@ -1,0 +1,88 @@
+<header class="app-header glass" aria-label="Primary navigation">
+  <div class="header__cluster">
+    <a class="brand" routerLink="/books">
+      <div class="brand__icon">
+        <span>📚</span>
+      </div>
+      <div class="brand__text">
+        <span class="brand__title">BookieBuddy.ai</span>
+        <span class="brand__subtitle">Reading adventures for curious minds</span>
+      </div>
+    </a>
+
+    <div class="brand__badge pill">
+      <i class="pi pi-sparkles"></i>
+      <span>Kids 8‑14</span>
+    </div>
+  </div>
+
+  <nav *ngIf="isAuthenticated" class="header__nav" aria-label="Main navigation">
+    <a
+      routerLink="/books"
+      routerLinkActive="active"
+      class="nav-link"
+    >
+      <i class="pi pi-book"></i>
+      Library
+    </a>
+    <a
+      routerLink="/books/new"
+      routerLinkActive="active"
+      class="nav-link"
+    >
+      <i class="pi pi-plus-circle"></i>
+      Add Book
+    </a>
+    <a
+      routerLink="/dashboard"
+      routerLinkActive="active"
+      class="nav-link"
+    >
+      <i class="pi pi-chart-line"></i>
+      Dashboard
+    </a>
+    <a
+      routerLink="/books/search"
+      routerLinkActive="active"
+      class="nav-link"
+    >
+      <i class="pi pi-search"></i>
+      Explore
+    </a>
+  </nav>
+
+  <div class="header__actions">
+    <ng-container *ngIf="isAuthenticated; else loginLink">
+      <div class="user-pill glass">
+        <p-avatar
+          size="large"
+          shape="circle"
+          [image]="user?.photoURL ?? undefined"
+          [label]="user?.photoURL ? undefined : displayName().charAt(0)"
+        ></p-avatar>
+        <div class="user-pill__text">
+          <span class="user-pill__name">{{ displayName() }}</span>
+          <span class="user-pill__meta">{{ user?.email || 'Reader profile' }}</span>
+        </div>
+      </div>
+      <button
+        pButton
+        type="button"
+        label="Logout"
+        icon="pi pi-sign-out"
+        class="btn-tertiary"
+        (click)="onLogout()"
+      ></button>
+    </ng-container>
+
+    <ng-template #loginLink>
+      <a
+        pButton
+        routerLink="/login"
+        severity="primary"
+        icon="pi pi-google"
+        label="Sign in with Google"
+      ></a>
+    </ng-template>
+  </div>
+</header>

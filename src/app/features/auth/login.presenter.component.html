@@ -1,0 +1,39 @@
+<section class="login-wrapper">
+  <div class="login-hero surface-alt app-section">
+    <div class="login-hero__intro">
+      <span class="pill">
+        <i class="pi pi-sparkles"></i>
+        BookieBuddy welcomes you
+      </span>
+      <h1>Log in to your reading universe</h1>
+      <p>
+        Connect with Google to unlock your personal library, track your reading streak, and capture
+        every magical moment from the books you love.
+      </p>
+    </div>
+
+    <div class="login-hero__card">
+      <button
+        pButton
+        type="button"
+        label="Continue with Google"
+        icon="pi pi-google"
+        class="login-button"
+        [loading]="loading"
+        [disabled]="loading"
+        (click)="onLogin()"
+      ></button>
+
+      <div class="login-hero__notes">
+        <div class="login-note">
+          <i class="pi pi-cloud-download"></i>
+          <span>Export reviews anytime to keep your reading memories safe.</span>
+        </div>
+        <div class="login-note">
+          <i class="pi pi-lock"></i>
+          <span>Your data lives locally on this device unless you share it.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

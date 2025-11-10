@@ -1,0 +1,27 @@
+.empty-state {
+  padding: clamp(2rem, 4vw, 2.75rem);
+  border-radius: var(--radius-lg);
+  text-align: center;
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.12), rgba(236, 72, 153, 0.1));
+  color: var(--text-color);
+  display: grid;
+  gap: 0.85rem;
+  justify-items: center;
+  box-shadow: var(--shadow-soft);
+}
+
+.empty-state i {
+  font-size: 2.35rem;
+  color: var(--primary-color-strong);
+}
+
+.empty-state h2 {
+  margin: 0;
+  font-size: clamp(1.3rem, 3vw, 1.5rem);
+  color: var(--primary-color-strong);
+}
+
+.empty-state p {
+  max-width: 420px;
+  color: var(--muted-text-color);
+}

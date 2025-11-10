@@ -1,0 +1,88 @@
+<section class="library-page">
+  <div class="hero-card app-section surface-alt shadow-soft">
+    <div class="section-heading">
+      <div class="section-heading__title">
+        <span class="pill">
+          <i class="pi pi-book"></i>
+          My Library
+        </span>
+        <h1>{{ heading }}</h1>
+        <p>Track every story, celebrate new favourites, and spot your next adventure at a glance.</p>
+      </div>
+
+      <div class="page-actions">
+        <button
+          pButton
+          type="button"
+          icon="pi pi-plus"
+          label="Add Book"
+          class="p-button-raised p-button-primary"
+          (click)="onCreate()"
+        ></button>
+        <button
+          pButton
+          type="button"
+          label="Explore search"
+          class="btn-tertiary p-button-outlined"
+          icon="pi pi-search"
+          routerLink="/books/search"
+        ></button>
+      </div>
+    </div>
+
+    <div class="hero-card__metrics">
+      <div class="metric-chip">
+        <div class="metric-chip__value">{{ books.length }}</div>
+        <span class="metric-chip__label">Books logged</span>
+      </div>
+      <div class="metric-chip">
+        <div class="metric-chip__value">
+          <i class="pi pi-sparkles"></i>
+        </div>
+        <span class="metric-chip__label">Keep building your reading streak!</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="app-section shadow-card">
+    <div class="library-meta">
+      <div class="library-meta__left">
+        <span class="badge">
+          <i class="pi pi-filter"></i>
+          Showing {{ books.length }} {{ books.length === 1 ? 'book' : 'books' }}
+        </span>
+      </div>
+      <span class="muted">Tap any card to revisit or edit your notes.</span>
+    </div>
+
+    <p-dataview
+      [value]="books"
+      layout="grid"
+      [loading]="loading"
+      [paginator]="books.length > 9"
+      [rows]="9"
+      [rowsPerPageOptions]="[9, 18, 27]"
+      emptyMessage=""
+      styleClass="book-list__dataview"
+    >
+      <ng-template pTemplate="gridItem" let-book>
+        <app-book-card-presenter
+          [book]="book"
+          (view)="onView($event)"
+          (edit)="onEdit($event)"
+          (delete)="onDelete($event)"
+        ></app-book-card-presenter>
+      </ng-template>
+
+      <ng-template pTemplate="empty">
+        <app-empty-state-presenter
+          title="Build your library"
+          message="Start by adding your first book review and watch your reading journey bloom."
+          actionLabel="Add your first book"
+          icon="pi pi-book"
+          (action)="onCreate()"
+        ></app-empty-state-presenter>
+      </ng-template>
+    </p-dataview>
+  </div>
+</section>

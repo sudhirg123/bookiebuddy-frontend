@@ -1,0 +1,55 @@
+<section class="dashboard-page">
+  <div class="app-section surface-alt shadow-soft dashboard-hero">
+    <div class="section-heading__title">
+      <span class="pill">
+        <i class="pi pi-chart-pie"></i>
+        Reading insights
+      </span>
+      <h1>Your reading journey at a glance</h1>
+      <p>Celebrate progress, spot patterns, and discover what keeps your reading streak alive.</p>
+    </div>
+  </div>
+
+  <div class="app-section stats-grid">
+    <app-stats-card-presenter
+      title="Books logged"
+      icon="pi pi-book"
+      [value]="stats.totalBooks"
+      helperText="Total reviews saved"
+    ></app-stats-card-presenter>
+    <app-stats-card-presenter
+      title="Average rating"
+      icon="pi pi-star"
+      [value]="stats.averageRating.toFixed(1)"
+      helperText="Across all reviews"
+    ></app-stats-card-presenter>
+    <app-stats-card-presenter
+      title="Reading streak"
+      icon="pi pi-fire"
+      [value]="stats.currentStreak"
+      helperText="Consecutive reading days"
+    ></app-stats-card-presenter>
+  </div>
+
+  <div class="app-section charts-grid">
+    <p-card class="dashboard-card">
+      <ng-template pTemplate="header">
+        <div class="dashboard-card__header">
+          <h3>Books by genre</h3>
+          <span class="muted">Which worlds you love the most</span>
+        </div>
+      </ng-template>
+      <p-chart type="pie" [data]="genreChart.data" [options]="genreChart.options"></p-chart>
+    </p-card>
+
+    <p-card class="dashboard-card">
+      <ng-template pTemplate="header">
+        <div class="dashboard-card__header">
+          <h3>Reading timeline</h3>
+          <span class="muted">Books completed each month</span>
+        </div>
+      </ng-template>
+      <p-chart type="line" [data]="timelineChart.data" [options]="timelineChart.options"></p-chart>
+    </p-card>
+  </div>
+</section>

@@ -1,0 +1,13 @@
+<section class="empty-state" aria-live="polite">
+  <i [class]="icon"></i>
+  <h2>{{ title }}</h2>
+  <p>{{ message }}</p>
+  <button
+    *ngIf="actionLabel"
+    pButton
+    type="button"
+    severity="secondary"
+    [label]="actionLabel"
+    (click)="onAction()"
+  ></button>
+</section>

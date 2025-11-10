@@ -1,0 +1,17 @@
+<div class="app-shell">
+  <app-header
+    [isAuthenticated]="isAuthenticated()"
+    [user]="user()"
+    (logout)="signOut()"
+  />
+
+  <main class="app-content">
+    <div class="app-page">
+      <router-outlet />
+    </div>
+  </main>
+
+  <app-footer />
+
+  <p-toast position="top-right" />
+</div>

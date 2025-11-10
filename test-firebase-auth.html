@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Firebase Auth Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            margin-top: 0;
+        }
+        button {
+            background: #4285f4;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 10px 5px;
+        }
+        button:hover {
+            background: #357ae8;
+        }
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        .info {
+            background: #e8f0fe;
+            border-left: 4px solid #4285f4;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .error {
+            background: #fce8e6;
+            border-left: 4px solid #d93025;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .success {
+            background: #e6f4ea;
+            border-left: 4px solid #34a853;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        pre {
+            background: #f5f5f5;
+            padding: 10px;
+            border-radius: 4px;
+            overflow-x: auto;
+            font-size: 12px;
+        }
+        .user-info {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 4px;
+        }
+        .status {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        .status.pending {
+            background: #fff3cd;
+        }
+        .status.success {
+            background: #d4edda;
+        }
+        .status.error {
+            background: #f8d7da;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔥 Firebase Authentication Test</h1>
+        <p>This page tests Firebase Google Authentication <strong>outside</strong> of the Angular app.</p>
+        
+        <div class="info">
+            <strong>Purpose:</strong> Verify Firebase configuration is correct before debugging Angular code.
+        </div>
+
+        <div id="status" class="status pending">Initializing Firebase...</div>
+
+        <div>
+            <button id="popupBtn" onclick="signInWithPopup()" disabled>Test Popup Authentication</button>
+            <button id="redirectBtn" onclick="signInWithRedirect()" disabled>Test Redirect Authentication</button>
+            <button id="signOutBtn" onclick="signOut()" disabled style="background: #d93025;">Sign Out</button>
+        </div>
+
+        <div id="userInfo" style="display: none;" class="user-info">
+            <h3>✅ Authenticated User:</h3>
+            <div id="userDetails"></div>
+        </div>
+
+        <div id="logs">
+            <h3>Console Logs:</h3>
+            <pre id="logOutput">Waiting for actions...</pre>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.14.0/firebase-app.js';
+        import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.14.0/firebase-auth.js';
+
+        // Your Firebase config - UPDATE THIS WITH YOUR CONFIG
+        // NOTE: Must use Firebase hosting domain for authDomain (not localhost)
+        // Firebase needs HTTPS to process auth, so it uses its hosting domain
+        const firebaseConfig = {
+            apiKey: "AIzaSyA_uPtXz3T4KkvJyEAukXupWiOipXDaBgE",
+            authDomain: "my-bookie-buddy-353fe.firebaseapp.com",
+            projectId: "my-bookie-buddy-353fe",
+            storageBucket: "my-bookie-buddy-353fe.firebasestorage.app",
+            messagingSenderId: "943505933471",
+            appId: "1:943505933471:web:4a379a154fb1d905dd8eaa",
+            measurementId: "G-JT46Y2M6WQ"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const provider = new GoogleAuthProvider();
+
+        // Logging helper
+        function log(message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            const logOutput = document.getElementById('logOutput');
+            const color = type === 'error' ? '#d93025' : type === 'success' ? '#34a853' : '#333';
+            logOutput.innerHTML += `<span style="color: ${color}">[${timestamp}] ${message}</span>\n`;
+            logOutput.scrollTop = logOutput.scrollHeight;
+            console.log(`[Firebase Test] ${message}`);
+        }
+
+        // Update status
+        function updateStatus(message, type = 'pending') {
+            const statusEl = document.getElementById('status');
+            statusEl.textContent = message;
+            statusEl.className = `status ${type}`;
+        }
+
+        // Enable buttons
+        function enableButtons() {
+            document.getElementById('popupBtn').disabled = false;
+            document.getElementById('redirectBtn').disabled = false;
+        }
+
+        // Update user info display
+        function updateUserInfo(user) {
+            const userInfoEl = document.getElementById('userInfo');
+            const userDetailsEl = document.getElementById('userDetails');
+            const signOutBtn = document.getElementById('signOutBtn');
+            
+            if (user) {
+                userInfoEl.style.display = 'block';
+                userDetailsEl.innerHTML = `
+                    <p><strong>Email:</strong> ${user.email}</p>
+                    <p><strong>Display Name:</strong> ${user.displayName || 'N/A'}</p>
+                    <p><strong>UID:</strong> ${user.uid}</p>
+                    <p><strong>Photo:</strong> ${user.photoURL ? `<img src="${user.photoURL}" width="50" height="50" style="border-radius: 50%;">` : 'N/A'}</p>
+                `;
+                signOutBtn.disabled = false;
+                updateStatus('User authenticated', 'success');
+            } else {
+                userInfoEl.style.display = 'none';
+                signOutBtn.disabled = true;
+                updateStatus('Not authenticated', 'pending');
+            }
+        }
+
+        // Global functions for buttons
+        window.signInWithPopup = async function() {
+            log('🔐 Attempting popup authentication...');
+            updateStatus('Opening popup...', 'pending');
+            
+            try {
+                const result = await signInWithPopup(auth, provider);
+                const user = result.user;
+                log(`✅ Popup authentication successful!`, 'success');
+                log(`User: ${user.email} (${user.displayName})`);
+                updateUserInfo(user);
+            } catch (error) {
+                log(`❌ Popup authentication failed: ${error.code} - ${error.message}`, 'error');
+                updateStatus(`Popup failed: ${error.code}`, 'error');
+                
+                if (error.code === 'auth/popup-blocked') {
+                    log('⚠️ Popup was blocked. Try redirect authentication instead.', 'error');
+                } else if (error.code === 'auth/network-request-failed') {
+                    log('⚠️ Network error. This might be a COOP issue. Try redirect authentication instead.', 'error');
+                }
+            }
+        };
+
+        window.signInWithRedirect = async function() {
+            log('🔐 Starting redirect authentication...');
+            log('Page will redirect to Google...', 'info');
+            updateStatus('Redirecting to Google...', 'pending');
+            
+            // Set a flag in sessionStorage so we know a redirect was initiated
+            sessionStorage.setItem('firebase_redirect_initiated', Date.now().toString());
+            
+            try {
+                await signInWithRedirect(auth, provider);
+                // Page will redirect, so code below won't run
+            } catch (error) {
+                log(`❌ Redirect failed: ${error.code} - ${error.message}`, 'error');
+                updateStatus(`Redirect failed: ${error.code}`, 'error');
+                sessionStorage.removeItem('firebase_redirect_initiated'); // Clear on error
+            }
+        };
+
+        window.signOut = async function() {
+            log('🚪 Signing out...');
+            try {
+                await signOut(auth);
+                log('✅ Signed out successfully', 'success');
+                updateUserInfo(null);
+            } catch (error) {
+                log(`❌ Sign out failed: ${error.message}`, 'error');
+            }
+        };
+
+        // Check for redirect result
+        async function checkRedirectResult() {
+            log('🔍 Checking for redirect result...');
+            
+            // Check if we came from Firebase hosting or Google
+            const referrer = document.referrer;
+            const cameFromFirebase = referrer.includes('firebaseapp.com');
+            const cameFromGoogle = referrer.includes('accounts.google.com');
+            const isOnFirebaseHosting = window.location.hostname.includes('firebaseapp.com');
+            
+            // Check URL parameters - Firebase might add params after redirect
+            const urlParams = new URLSearchParams(window.location.search);
+            const hashParams = new URLSearchParams(window.location.hash.substring(1));
+            const hasAuthParams = urlParams.has('code') || urlParams.has('state') || 
+                                   hashParams.has('code') || hashParams.has('state');
+            
+            log(`Referrer: ${referrer || '(empty - browser may have cleared it)'}`);
+            log(`Came from Firebase: ${cameFromFirebase}`);
+            log(`Came from Google: ${cameFromGoogle}`);
+            log(`On Firebase hosting: ${isOnFirebaseHosting}`);
+            log(`Has auth params in URL: ${hasAuthParams}`);
+            log(`Current URL: ${window.location.href}`);
+            
+            // If we're on Firebase hosting, Firebase will handle redirect - just wait
+            if (isOnFirebaseHosting) {
+                log('🔥 On Firebase hosting domain - Firebase will process and redirect');
+                return;
+            }
+            
+            // Check if we recently initiated a redirect (check sessionStorage)
+            const redirectInitiated = sessionStorage.getItem('firebase_redirect_initiated');
+            if (redirectInitiated) {
+                log('⏳ Detect redirect was initiated - waiting for auth state to sync...');
+                sessionStorage.removeItem('firebase_redirect_initiated'); // Clear flag
+                
+                // Check currentUser immediately
+                if (auth.currentUser) {
+                    log(`✅ Found user immediately! ${auth.currentUser.email}`, 'success');
+                    updateUserInfo(auth.currentUser);
+                    return;
+                }
+                
+                // Wait progressively longer for auth state to sync (cross-domain sync can be slow)
+                for (let attempt = 0; attempt < 15; attempt++) {
+                    const waitTime = 200 * (attempt + 1); // 200ms, 400ms... up to 3s
+                    log(`Waiting ${waitTime}ms for auth sync (attempt ${attempt + 1}/15)...`);
+                    await new Promise(resolve => setTimeout(resolve, waitTime));
+                    
+                    if (auth.currentUser) {
+                        log(`✅ User found after ${waitTime}ms! ${auth.currentUser.email}`, 'success');
+                        updateUserInfo(auth.currentUser);
+                        return;
+                    }
+                }
+                
+                log('⚠️ No user found after 3 seconds - auth state may not have synced', 'error');
+                log('💡 Try checking browser DevTools → Application → IndexedDB → firebaseLocalStorageDb', 'error');
+            }
+            
+            // If we came from Firebase/Google (even if referrer is empty, URL params might help)
+            if (cameFromFirebase || cameFromGoogle || hasAuthParams) {
+                log('⏳ Detected potential redirect (referrer or URL params) - waiting for auth state to sync...');
+                
+                // Check currentUser immediately
+                if (auth.currentUser) {
+                    log(`✅ Found user immediately! ${auth.currentUser.email}`, 'success');
+                    updateUserInfo(auth.currentUser);
+                    return;
+                }
+                
+                // Wait progressively longer for auth state to sync
+                for (let attempt = 0; attempt < 15; attempt++) {
+                    const waitTime = 200 * (attempt + 1);
+                    log(`Waiting ${waitTime}ms for auth sync (attempt ${attempt + 1}/15)...`);
+                    await new Promise(resolve => setTimeout(resolve, waitTime));
+                    
+                    if (auth.currentUser) {
+                        log(`✅ User found after ${waitTime}ms! ${auth.currentUser.email}`, 'success');
+                        updateUserInfo(auth.currentUser);
+                        return;
+                    }
+                }
+                
+                log('⚠️ No user found after waiting - auth state may not have synced', 'error');
+            }
+            
+            try {
+                const result = await getRedirectResult(auth);
+                if (result) {
+                    const user = result.user;
+                    log(`✅ Redirect result found!`, 'success');
+                    log(`User: ${user.email} (${user.displayName})`);
+                    updateUserInfo(user);
+                } else {
+                    // Also check currentUser as fallback (especially for cross-domain redirects)
+                    if (auth.currentUser) {
+                        log(`✅ No redirect result, but currentUser exists! ${auth.currentUser.email}`, 'success');
+                        log(`This means Firebase processed auth on hosting domain`);
+                        updateUserInfo(auth.currentUser);
+                    } else {
+                        log('ℹ️ No redirect result found (normal if not coming from redirect)');
+                        log('💡 If you just returned from Google, wait a moment - auth state is syncing...');
+                    }
+                }
+            } catch (error) {
+                log(`❌ Error checking redirect result: ${error.code} - ${error.message}`, 'error');
+                
+                // Fallback: check currentUser if getRedirectResult failed
+                if (auth.currentUser) {
+                    log(`✅ getRedirectResult failed, but currentUser exists! ${auth.currentUser.email}`, 'success');
+                    updateUserInfo(auth.currentUser);
+                }
+            }
+        }
+
+        // Monitor auth state - this should fire when auth state syncs
+        onAuthStateChanged(auth, (user) => {
+            const timestamp = new Date().toLocaleTimeString();
+            if (user) {
+                log(`🔄 Auth state changed: User logged in (${user.email}) at ${timestamp}`, 'success');
+                updateUserInfo(user);
+                
+                // If we were waiting for sync, this is the signal!
+                if (sessionStorage.getItem('firebase_redirect_initiated')) {
+                    log('✅✅✅ Auth state synced via onAuthStateChanged!', 'success');
+                }
+            } else {
+                log(`🔄 Auth state changed: User logged out at ${timestamp}`);
+                updateUserInfo(user);
+                
+                // If we were waiting and got logged out, this is a problem
+                if (sessionStorage.getItem('firebase_redirect_initiated')) {
+                    log('⚠️⚠️⚠️ Auth state changed to logged out while waiting for sync!', 'error');
+                    log('This means auth state did NOT sync from Firebase hosting domain', 'error');
+                }
+            }
+        });
+
+        // Initialize
+        log('🚀 Firebase initialized');
+        log(`Auth Domain: ${firebaseConfig.authDomain}`);
+        log(`Current URL: ${window.location.href}`);
+        log(`Protocol: ${window.location.protocol}`);
+        log(`Host: ${window.location.host}`);
+        log(`\n⚠️ IMPORTANT: If you see HTTPS errors, Firebase is trying to use HTTPS on localhost`);
+        log(`This won't work. Firebase must use HTTP for localhost development.`);
+        log(`Make sure authDomain is: ${firebaseConfig.authDomain}`);
+        
+        // Check redirect result on load
+        checkRedirectResult().then(() => {
+            enableButtons();
+            updateStatus('Ready - Click a button to test authentication', 'success');
+        });
+    </script>
+</body>
+</html>

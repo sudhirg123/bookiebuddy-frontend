@@ -1,0 +1,44 @@
+.app-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--background-gradient);
+}
+
+.app-content {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  padding: clamp(1rem, 4vw, 3rem);
+}
+
+.app-content::before,
+.app-content::after {
+  content: '';
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.22;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.app-content::before {
+  width: 420px;
+  height: 420px;
+  background: rgba(124, 58, 237, 0.65);
+  top: -120px;
+  right: -140px;
+}
+
+.app-content::after {
+  width: 360px;
+  height: 360px;
+  background: rgba(236, 72, 153, 0.55);
+  bottom: -140px;
+  left: -120px;
+}
+
+.app-page {
+  width: 100%;
+}

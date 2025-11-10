@@ -1,0 +1,68 @@
+<article class="book-card shadow-card fade-border rounded-lg">
+  <div class="book-card__media">
+    <img
+      [src]="book.coverImageUrl"
+      [alt]="book.title"
+      class="book-card__cover"
+    />
+    <div class="book-card__rating">
+      <i class="pi pi-star-fill"></i>
+      <span>{{ book.rating | number : '1.0-1' }}</span>
+    </div>
+  </div>
+
+  <div class="book-card__body">
+    <div class="book-card__header">
+      <h3>{{ book.title }}</h3>
+      <span class="book-card__author">By {{ book.author }}</span>
+    </div>
+
+    <div class="book-card__meta">
+      <span class="chip">
+        <i class="pi pi-tag"></i>
+        {{ book.genre }}
+      </span>
+      <span class="book-card__date" *ngIf="book.dateFinished; else createdAt">
+        <i class="pi pi-calendar"></i>
+        Finished {{ book.dateFinished | date: 'MMM d, y' }}
+      </span>
+      <ng-template #createdAt>
+        <span class="book-card__date">
+          <i class="pi pi-clock"></i>
+          Added {{ book.createdAt | date: 'MMM d, y' }}
+        </span>
+      </ng-template>
+    </div>
+
+    <div class="book-card__excerpt" [innerHTML]="book.reviewHtml | safeHtml"></div>
+  </div>
+
+  <footer class="book-card__footer" *ngIf="showActions">
+    <button
+      pButton
+      type="button"
+      label="View details"
+      icon="pi pi-eye"
+      class="p-button-text"
+      (click)="onView()"
+    ></button>
+    <div class="book-card__footer-actions">
+      <button
+        pButton
+        type="button"
+        label="Edit"
+        icon="pi pi-pencil"
+        class="p-button-text"
+        (click)="onEdit()"
+      ></button>
+      <button
+        pButton
+        type="button"
+        label="Delete"
+        icon="pi pi-trash"
+        class="p-button-text p-button-danger"
+        (click)="onDelete()"
+      ></button>
+    </div>
+  </footer>
+</article>
