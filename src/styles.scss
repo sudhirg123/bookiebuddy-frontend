@@ -1,5 +1,7 @@
 @import 'primeicons/primeicons.css';
 @import 'primeflex/primeflex.css';
+@import 'primeng/resources/themes/lara-light-blue/theme.css';
+@import 'primeng/resources/primeng.min.css';
 
 :root {
   --primary-color: #7c3aed;
@@ -397,4 +399,42 @@ button {
 ::-webkit-scrollbar-thumb {
   background: linear-gradient(var(--primary-color), var(--secondary-color));
   border-radius: 12px;
+}
+
+/* Autocomplete Panel Fixes - PrimeNG 20 */
+.p-autocomplete-overlay,
+.p-autocomplete-panel {
+  background: #ffffff !important;
+  border: 1px solid rgba(33, 27, 58, 0.15) !important;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2) !important;
+  border-radius: var(--radius-md) !important;
+  margin-top: 0.5rem !important;
+}
+
+.p-autocomplete-list,
+.p-autocomplete-items {
+  background: #ffffff !important;
+  padding: 0.5rem 0 !important;
+}
+
+.p-autocomplete-option,
+.p-autocomplete-item {
+  background: #ffffff !important;
+  color: rgba(33, 27, 58, 0.95) !important;
+  padding: 0.75rem 1rem !important;
+  margin: 0 0.5rem !important;
+  border-radius: var(--radius-sm) !important;
+}
+
+.p-autocomplete-option:hover,
+.p-autocomplete-item:hover {
+  background: rgba(124, 58, 237, 0.08) !important;
+  color: rgba(33, 27, 58, 1) !important;
+}
+
+.p-autocomplete-option.p-focus,
+.p-autocomplete-option.p-highlight,
+.p-autocomplete-item.p-highlight {
+  background: rgba(124, 58, 237, 0.12) !important;
+  color: var(--primary-color-strong) !important;
 }

@@ -71,14 +71,17 @@
   font-size: 0.85rem;
 }
 
-.book-list__dataview ::ng-deep .p-dataview-content {
-  padding: 0;
+.book-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: clamp(1rem, 2.5vw, 1.75rem);
+  margin-top: clamp(1rem, 2vw, 1.5rem);
 }
 
-.book-list__dataview ::ng-deep .p-dataview-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: clamp(1rem, 2.5vw, 1.75rem);
+@media (max-width: 768px) {
+  .book-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 768px) {

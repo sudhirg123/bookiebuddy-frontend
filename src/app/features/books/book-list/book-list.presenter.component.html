@@ -55,34 +55,24 @@
       <span class="muted">Tap any card to revisit or edit your notes.</span>
     </div>
 
-    <p-dataview
-      [value]="books"
-      layout="grid"
-      [loading]="loading"
-      [paginator]="books.length > 9"
-      [rows]="9"
-      [rowsPerPageOptions]="[9, 18, 27]"
-      emptyMessage=""
-      styleClass="book-list__dataview"
-    >
-      <ng-template pTemplate="gridItem" let-book>
-        <app-book-card-presenter
-          [book]="book"
-          (view)="onView($event)"
-          (edit)="onEdit($event)"
-          (delete)="onDelete($event)"
-        ></app-book-card-presenter>
-      </ng-template>
+    <div *ngIf="books.length > 0; else emptyState" class="book-grid">
+      <app-book-card-presenter
+        *ngFor="let book of books"
+        [book]="book"
+        (view)="onView($event)"
+        (edit)="onEdit($event)"
+        (delete)="onDelete($event)"
+      ></app-book-card-presenter>
+    </div>
 
-      <ng-template pTemplate="empty">
-        <app-empty-state-presenter
-          title="Build your library"
-          message="Start by adding your first book review and watch your reading journey bloom."
-          actionLabel="Add your first book"
-          icon="pi pi-book"
-          (action)="onCreate()"
-        ></app-empty-state-presenter>
-      </ng-template>
-    </p-dataview>
+    <ng-template #emptyState>
+      <app-empty-state-presenter
+        title="Build your library"
+        message="Start by adding your first book review and watch your reading journey bloom."
+        actionLabel="Add your first book"
+        icon="pi pi-book"
+        (action)="onCreate()"
+      ></app-empty-state-presenter>
+    </ng-template>
   </div>
 </section>

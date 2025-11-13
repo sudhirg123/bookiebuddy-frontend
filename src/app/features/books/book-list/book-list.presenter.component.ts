@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
-import { DataViewModule } from 'primeng/dataview';
 import { Book } from '../../../models/book.model';
 import { BookCardPresenterComponent } from '../../../shared/components/book-card.presenter.component';
 import { EmptyStatePresenterComponent } from '../../../shared/components/empty-state.presenter.component';
@@ -11,8 +11,8 @@ import { EmptyStatePresenterComponent } from '../../../shared/components/empty-s
   standalone: true,
   imports: [
     CommonModule,
+    RouterModule,
     ButtonModule,
-    DataViewModule,
     BookCardPresenterComponent,
     EmptyStatePresenterComponent
   ],
