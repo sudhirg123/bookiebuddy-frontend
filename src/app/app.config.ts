@@ -3,6 +3,7 @@ import { provideRouter, withComponentInputBinding } from '@angular/router';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { providePrimeNG } from 'primeng/config';
+import Aura from '@primeng/themes/aura';
 import { MessageService } from 'primeng/api';
 import { provideFirebaseApp } from '@angular/fire/app';
 import { initializeApp } from 'firebase/app';
@@ -18,6 +19,14 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withInterceptors([authInterceptor])),
     provideAnimations(),
     providePrimeNG({
+      theme: {
+        preset: Aura,
+        options: {
+          prefix: 'p',
+          darkModeSelector: 'system',
+          cssLayer: false
+        }
+      },
       ripple: true
     }),
     MessageService,
