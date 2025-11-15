@@ -5,11 +5,12 @@ import { ToastModule } from 'primeng/toast';
 import { AuthService } from './core/services/auth.service';
 import { HeaderComponent } from './shared/components/header/header.component';
 import { FooterComponent } from './shared/components/footer/footer.component';
+import { DevToolsComponent } from './dev-tools.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, ToastModule, HeaderComponent, FooterComponent],
+  imports: [CommonModule, RouterOutlet, ToastModule, HeaderComponent, FooterComponent, DevToolsComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
