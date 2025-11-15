@@ -25,6 +25,16 @@
   box-shadow: var(--shadow-card);
 }
 
+.dashboard-card ::ng-deep .p-card-header {
+  background: transparent;
+  padding: 1.5rem 1.5rem 1rem;
+  border-bottom: 1px solid rgba(124, 58, 237, 0.08);
+}
+
+.dashboard-card ::ng-deep .p-card-body {
+  padding: 1.5rem;
+}
+
 .dashboard-card__header {
   display: grid;
   gap: 0.35rem;
@@ -34,4 +44,36 @@
   margin: 0;
   font-size: 1.2rem;
   color: var(--primary-color-strong);
+}
+
+.dashboard-card__header span {
+  font-size: 0.9rem;
+  color: var(--muted-text-color);
+}
+
+.empty-chart-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(2rem, 5vw, 4rem) 1rem;
+  text-align: center;
+  color: var(--muted-text-color);
+}
+
+.empty-chart-state i {
+  font-size: 3rem;
+  color: rgba(124, 58, 237, 0.3);
+  margin-bottom: 1rem;
+}
+
+.empty-chart-state p {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-color);
+  margin-bottom: 0.5rem;
+}
+
+.empty-chart-state span {
+  font-size: 0.9rem;
 }

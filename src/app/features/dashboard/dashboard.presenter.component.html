@@ -39,7 +39,19 @@
           <span class="muted">Which worlds you love the most</span>
         </div>
       </ng-template>
-      <p-chart type="pie" [data]="genreChart.data" [options]="genreChart.options"></p-chart>
+      <p-chart
+        *ngIf="stats.booksByGenre.length > 0; else emptyGenreChart"
+        type="pie"
+        [data]="genreChart.data"
+        [options]="genreChart.options">
+      </p-chart>
+      <ng-template #emptyGenreChart>
+        <div class="empty-chart-state">
+          <i class="pi pi-chart-pie"></i>
+          <p>No books yet</p>
+          <span class="muted">Add books to see your genre preferences</span>
+        </div>
+      </ng-template>
     </p-card>
 
     <p-card class="dashboard-card">
@@ -49,7 +61,19 @@
           <span class="muted">Books completed each month</span>
         </div>
       </ng-template>
-      <p-chart type="line" [data]="timelineChart.data" [options]="timelineChart.options"></p-chart>
+      <p-chart
+        *ngIf="stats.readingTimeline.length > 0; else emptyTimelineChart"
+        type="line"
+        [data]="timelineChart.data"
+        [options]="timelineChart.options">
+      </p-chart>
+      <ng-template #emptyTimelineChart>
+        <div class="empty-chart-state">
+          <i class="pi pi-chart-line"></i>
+          <p>No reading history yet</p>
+          <span class="muted">Add books with completion dates to see your timeline</span>
+        </div>
+      </ng-template>
     </p-card>
   </div>
 </section>

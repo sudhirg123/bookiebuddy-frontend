@@ -11,6 +11,7 @@ export const environment = {
     appId: "1:943505933471:web:4a379a154fb1d905dd8eaa",
     measurementId: "G-JT46Y2M6WQ"
   },
+  apiBaseUrl: 'http://localhost:8001/api/v1',
   googleBooksApiUrl: 'https://www.googleapis.com/books/v1/volumes',
   storage: {
     booksKey: 'bookiebuddy_books',
