@@ -239,6 +239,7 @@ export class AuthService {
       await signOut(this.auth);
       this.clearSession();
       this.toast.info('Signed out', 'Come back soon for more reading adventures!');
+      await this.router.navigateByUrl('/login', { replaceUrl: true });
     } catch (error) {
       this.toast.error('Logout failed', 'Please refresh the page and try again.');
       console.error('Sign-out error', error);

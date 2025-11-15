@@ -9,7 +9,7 @@
   flex: 1;
   display: flex;
   justify-content: center;
-  padding: clamp(1rem, 4vw, 3rem);
+  padding: 0 clamp(1rem, 4vw, 3rem);
 }
 
 .app-content::before,

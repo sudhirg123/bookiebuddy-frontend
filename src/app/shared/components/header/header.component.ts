@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output, computed } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Component, EventEmitter, Input, Output, computed, inject } from '@angular/core';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { AvatarModule } from 'primeng/avatar';
 import { ButtonModule } from 'primeng/button';
 import { UserProfile } from '../../../models/user.model';
@@ -13,11 +13,17 @@ import { UserProfile } from '../../../models/user.model';
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
+  private readonly router = inject(Router);
+
   @Input({ required: true }) isAuthenticated = false;
   @Input() user: UserProfile | null = null;
   @Output() logout = new EventEmitter<void>();
 
   readonly displayName = computed(() => this.user?.displayName ?? 'BookieBuddy Reader');
+
+  get isLoginPage(): boolean {
+    return this.router.url === '/login';
+  }
 
   onLogout(): void {
     this.logout.emit();
